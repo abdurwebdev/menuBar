@@ -1,34 +1,34 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react';
 import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import PageTwo from './components/PageTwo';
+
 const App = () => {
-    const container = useRef();
-    useGSAP(()=>{
-      gsap.from(container.current,{
-        rotate:360,
-        scale:0,
-        opacity:0,
-        delay:1,
-        duration:1
-      })
-    })
-   
+  const [circles, setCircle] = useState(0);
+  const random = gsap.utils.random(-500, 500, 50);
+
+  useEffect(() => {
+    gsap.to('.circle', {
+      x: circles,
+      duration: 1,
+    });
+  }, [circles]);
+
   return (
     <>
-    <section className='w-full h-screen flex items-center m-auto gap-x-5 justify-center'>
-      <div   className="container p-5 gap-y-5 flex-col border-2 rounded-3xl border-black w-[20%] flex items-center justify-center">
-        <div className="circle w-[200px] h-[200px] rounded-full bg-lime-300"></div>
-        <div ref={container}  className="box w-[200px] h-[200px] bg-red-500"></div>
-      </div>
-      <div className="kuch p-5 gap-y-5 flex-col  w-[20%] flex items-center justify-center">
-      <div className="circle w-[200px] h-[200px] rounded-full bg-blue-400"></div>
-      <div className="box w-[200px] h-[200px] bg-red-500"></div>
-      </div>
-    </section>
-    <PageTwo/>
+    <div className="w-full h-screen flex-col gap-y-5 flex items-center justify-center text-white bg-[#111]">
+      <button
+        onClick={() => {
+          setCircle(random);
+          console.log("hello");
+          
+        }}
+        className="rounded-3xl text-2xl px-10 py-5 text-white bg-yellow-300"
+      >
+        Animate
+      </button>
+      <div className="circle w-[200px] h-[200px] rounded-full bg-green-400"></div>
+    </div>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
