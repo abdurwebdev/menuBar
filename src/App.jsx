@@ -1,47 +1,34 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react'
 import gsap from 'gsap';
-
-function App() {
-  const honeRef = useRef(null);
-  
-  useEffect(() => {
-    const h1 = honeRef.current;
-    const text = h1.textContent;
-    const half=text.length/2;
-    let clutter = '';
-    text.split('').forEach((item, idx) => {
-      if(idx>half)
-      {
-        clutter += `<span class="a" style="display: inline-block;">${item}</span>`;
-      }
-      else
-      {
-        clutter += `<span class="b" style="display: inline-block;">${item}</span>`;
-      }
-    });
-    
-    h1.innerHTML = clutter;
-    
-    gsap.to(".hello h1 span.a", {
-      y: -50,
-      stagger: 0.2,
-      duration: 0.5,
-      ease: 'power1.out',
-    });
-    gsap.to(".hello h1 span.b", {
-      y: -50,
-      stagger: -0.2,
-      duration: 0.5,
-      ease: 'power1.out',
-    });
-
-  }, []);
-  
+import { useGSAP } from '@gsap/react';
+import PageTwo from './components/PageTwo';
+const App = () => {
+    const container = useRef();
+    useGSAP(()=>{
+      gsap.from(container.current,{
+        rotate:360,
+        scale:0,
+        opacity:0,
+        delay:1,
+        duration:1
+      })
+    })
+   
   return (
-    <div className='flex hello items-center text-white justify-center w-full h-screen bg-[#111]'>
-      <h1 ref={honeRef} className='text-[6vw] font-[Whyte] w-full h-full flex items-center justify-center'>Sheriyans</h1>
-    </div>
-  );
+    <>
+    <section className='w-full h-screen flex items-center m-auto gap-x-5 justify-center'>
+      <div   className="container p-5 gap-y-5 flex-col border-2 rounded-3xl border-black w-[20%] flex items-center justify-center">
+        <div className="circle w-[200px] h-[200px] rounded-full bg-lime-300"></div>
+        <div ref={container}  className="box w-[200px] h-[200px] bg-red-500"></div>
+      </div>
+      <div className="kuch p-5 gap-y-5 flex-col  w-[20%] flex items-center justify-center">
+      <div className="circle w-[200px] h-[200px] rounded-full bg-blue-400"></div>
+      <div className="box w-[200px] h-[200px] bg-red-500"></div>
+      </div>
+    </section>
+    <PageTwo/>
+    </>
+  )
 }
 
-export default App;
+export default App
